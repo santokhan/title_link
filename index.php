@@ -14,34 +14,6 @@ $GLOBALS['title_link'] = [
     'link2' => [],
     'related' => []
 ];
-$demodata = [
-    'title' => [
-        "World's BIGGEST CAR WASH - Washing, Waxing, Drying - YouTube",
-        "Car Wash & Car Cleaning Services in Dhaka Bangladesh | Sheba.xyz",
-        "Car Wash & Polish: Best Car Cleaning Service in Bangladesh",
-        "Car wash - Wikipedia",
-        "Welcome to the number 1 Car wash in Bangladesh.",
-        "100+ Car Wash Pictures | Download Free Images on Unsplash",
-        "More from Speed Car Wash - Facebook",
-        " 153076 Car wash Images, Stock Photos & Vectors - Shutterstock",
-        " Car Wash & Express Detail - Mister Car Wash",
-        " Car Wash - Walmart.com",
-    ],
-    'link' => [
-        "https://www.youtube.com/watch%3Fv%3DPU5orW-mtVs&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQtwJ6BAgOEAE&usg=AOvVaw2aw94lRZYo5BOB2dv26qeU",
-        "https://www.sheba.xyz/car-cleaning&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQFnoECAMQAg&usg=AOvVaw3TbzobToXPCX21ECV4zf69",
-        "https://www.sheba.xyz/car-wash-polish&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQFnoECAkQAg&usg=AOvVaw2cz7AyymPI-aYLGMkKCsHQ",
-        "https://en.wikipedia.org/wiki/Car_wash&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQFnoECAoQAg&usg=AOvVaw2o5kresG9qc_yl21Fnnuvf",
-        "https://www.nasproauto.com/&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQFnoECAgQAg&usg=AOvVaw2ANl7BVpFjl_OCE-r94LNk",
-        "https://unsplash.com/s/photos/car-wash&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQFnoECAQQAg&usg=AOvVaw2g_U3a-Suoj6kVfaTGsdt8",
-        "https://www.facebook.com/SpeedCarWashDhaka/videos/best-international-car-washing-brand-speed-car-wash-now-in-bangladesh-pls-visit-/297070238285155/&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQtwJ6BAgNEAE&usg=AOvVaw2Q3f0aaHyjt2PbZMl5EXm4",
-        " https://www.shutterstock.com/search/car-wash&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQFnoECAIQAg&usg=AOvVaw2OZZyllCRp7ctOITJa_TtZ",
-        " https://mistercarwash.com/car-wash/&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQFnoECAwQAg&usg=AOvVaw2UvdtaGcDsQEXzIONZxO1T",
-        " https://www.walmart.com/browse/auto-tires/car-wash/91083_1212910_1212912&sa=U&ved=2ahUKEwiPu_HSncj5AhUzs5UCHUjkDDsQFnoECAEQAg&usg=AOvVaw2FQvozkd6iYxmAReO-Jizy",
-    ],
-    'related' => []
-];
-$redirect = false;
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -102,59 +74,6 @@ function scrape_google($keyword): void
          * Response back to client
          */
         echo json_encode($GLOBALS['title_link']);
-
-        // related-question-pair
-        // foreach ($get_html_dom->find(".related-question-pair") as $keyword) {
-        //     echo $keyword->plaintext . '<br/>';
-        // $GLOBALS['title_link']['related'][] = $keyword->plaintext;
-        // }
-
-        // var_dump($get_html_dom->find("[id=result-stats]"));
-        // var_dump($get_html_dom->find("[data-xbu]"));
-
-        //'#bres a[data-xbu]'
-        // foreach ($get_html_dom->find("a[data-xbu]") as $keyword) {
-        //     echo $keyword->plaintext . '<br/>';
-
-        //     $GLOBALS['title_link']['related'][] = $keyword->plaintext;
-        // }
-    }
-}
-
-
-function scrape_paid(): string
-{
-    $ch = curl_init('https://api.keywordseverywhere.com/v1/get_keyword_data');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Accept: application/json',
-        'Authorization: Bearer 58dc40a5413c50ed6bcb'
-    ));
-
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt(
-        $ch,
-        CURLOPT_POSTFIELDS,
-        urldecode(http_build_query([
-            "dataSource" => "gkp",
-            "country" => "us",
-            "currency" => "USD",
-            "kw" => [
-                "keywords tool",
-                "keyword planner",
-            ]
-        ]))
-    );
-
-    $data = curl_exec($ch);
-    $err = curl_error($ch);
-    $info = curl_getinfo($ch);
-    curl_close($ch);
-
-    if ($info['http_code'] == 200) {
-        return $data;
-    } else {
-        return  $data;
     }
 }
 
