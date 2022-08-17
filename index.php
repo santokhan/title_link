@@ -1,6 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+header("Access-Control-Allow-Methods: POST");
+header("Content-Type: application/json; charset=UTF-8");
 /**
  * This file required json data from client
  */
@@ -14,16 +15,16 @@ $GLOBALS['title_link'] = [
     'link2' => [],
     'related' => []
 ];
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $get_input_from_client = file_get_contents('php://input');
-    $input = json_decode($get_input_from_client, true);
-    if (str_contains($input['search'], ' ')) {
-        $input = str_replace(" ", "+", $input['search']);
+    $input = $_POST['search'];
+    if (str_contains($input, ' ')) {
+        $keyword = str_replace(" ", "+", $input);
     }
     $keyword = json_encode($input);
+    // echo $keyword;
     scrape_google($keyword);
+} else {
+    echo 'Request method is not valid';
 }
 
 
@@ -42,6 +43,7 @@ function scrape_google($keyword): void
          * 
          * '#rso a[href^=https][data-ved][ping]'
          */
+
         foreach ($get_html_dom->find('#main a[href]') as $a) {
             $url = $a->getAttribute('href');
             if (domain_cheker($url)) {
